@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
 - system/argocd/
-- system/vault/
+#- system/vault/
