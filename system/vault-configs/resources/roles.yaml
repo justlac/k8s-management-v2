@@ -1,0 +1,51 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: KubernetesAuthEngineRole
+metadata:
+  name: config-admin
+spec:
+  # Add fields here
+  authentication: 
+    path: k8s-management-v2
+    role: config-admin
+  path: k8s-management-v2
+  policies:
+    - config-admin
+  targetServiceAccounts:
+    - default
+  targetNamespaces:
+    targetNamespaces:
+    - vault
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: KubernetesAuthEngineRole
+metadata:
+  name: secret-writer
+spec:
+  authentication: 
+    path: k8s-management-v2
+    role: config-admin
+  path: k8s-management-v2  
+  policies:
+    - secret-writer
+  targetServiceAccounts:
+    - '*'
+  targetNamespaces:
+    targetNamespaces:
+    - '*'
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: KubernetesAuthEngineRole
+metadata:
+  name: secret-reader
+spec:
+  authentication: 
+    path: k8s-management-v2
+    role: config-admin
+  path: k8s-management-v2  
+  policies:
+    - secret-reader
+  targetServiceAccounts:
+    - '*'
+  targetNamespaces:
+    targetNamespaces:
+    - '*'

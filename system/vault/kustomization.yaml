@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - resources/certificate.yaml
+  - resources/httpproxy.yaml
+
+helmCharts:
+  - name: vault
+    version: "0.29.1"  # Specify the version of the Vault chart
+    repo: "https://helm.releases.hashicorp.com"  # Repository for the Vault chart
+    releaseName: "vault"  # Release name for your Helm deployment
+    namespace: vault  # Vault namespace
+    valuesFile: "helm/vault.values.yaml"  # Reference to your `values.yaml` file
+  - name: vault-config-operator
+    version: "0.8.29"
+    repo: "https://redhat-cop.github.io/vault-config-operator"
+    releaseName: "vault-config-operator"
+    namespace: vault 
+    valuesFile: "helm/vault-config.values.yaml"
+    includeCRDs: true
