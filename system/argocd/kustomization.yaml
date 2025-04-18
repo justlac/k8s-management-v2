@@ -6,6 +6,8 @@ namespace: argocd
 resources:
   - resources/base.yaml
   - resources/appproject.yaml
+  - resources/argocd-image-updater.yaml
+  - resources/ingress.yaml
   - argocd-app.yaml
 
 secretGenerator:
@@ -21,6 +23,12 @@ secretGenerator:
       - name=k8s-management-v2
       - namespace=*
 
+helmCharts:
+  - name: argo-cd
+    repo: https://argoproj.github.io/argo-helm
+    releaseName: argocd
+    version: 7.8.26
+    valuesFile: helm/values.yaml
 
 # patches:
 #   - patch: |-
