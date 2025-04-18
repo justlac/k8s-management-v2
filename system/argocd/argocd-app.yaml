@@ -11,7 +11,7 @@ spec:
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
-  project: k8s-management-v2s
+  project: k8s-management-v2
   sources:
   - chart: argo-cd
     helm:
@@ -19,7 +19,7 @@ spec:
       valueFiles:
       - $values/system/argocd/helm/values.yaml
     repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: 7.7.3
+    targetRevision: 7.8.26
   - repoURL: 'https://github.com/ClubCedille/k8s-management-v2.git'
     targetRevision: main
     ref: values
