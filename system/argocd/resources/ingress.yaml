@@ -33,6 +33,6 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: argocd.mgmt.cedille.club
+  commonName: argocd.mgmtv2.cedille.club
   dnsNames:
     - argocd.mgmtv2.cedille.club
