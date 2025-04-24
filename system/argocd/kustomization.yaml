@@ -8,7 +8,7 @@ resources:
   - resources/appproject.yaml
   - resources/argocd-image-updater.yaml
   - resources/ingress.yaml
-  - argocd-app.yaml
+  - argocd.argoapp.yaml
 
 secretGenerator:
   - name: cluster-kubernetes.default.svc
