@@ -202,7 +202,7 @@ configs:
     dex.config: |
       connectors:
         - config:
-            issuer: https://authentik.svc.cedille.club/application/o/argocd/
+            issuer: https://authentik-int.svc.cedille.club/application/o/argocd/
             clientID: JDqmDzVCT0Em8fxmDskdhM3yPTqG1Y4jd9xYEn7N
             clientSecret: $argocd-authentik-secret:dex.authentik.clientSecret
             insecureEnableGroups: true
@@ -213,30 +213,6 @@ configs:
           name: authentik
           type: oidc
           id: authentik
-    #     # GitHub example
-        # - type: github
-    #       id: github
-    #       name: GitHub
-    #       config:
-    #         clientID: aabbccddeeff00112233
-    #         clientSecret: $dex.github.clientSecret # Alternatively $<some_K8S_secret>:dex.github.clientSecret
-    #         orgs:
-    #         - name: your-github-org
-    # url: https://argocd.mgmtv2.cedille.club
-    # dex.config: |
-    #     connectors:
-    #     - config:
-    #         issuer: https://authentik.mgmt.cedille.club/application/o/<application slug defined in step 2>/
-    #         clientID: <client ID from the Provider above>
-    #         clientSecret: $dex-secret:dex.authentik.clientSecret
-    #         insecureEnableGroups: true
-    #         scopes:
-    #           - openid
-    #           - profile
-    #           - email
-    #       name: authentik
-    #       type: oidc
-    #       id: authentik
 
     # OIDC configuration as an alternative to dex (optional).
     # oidc.config: |
