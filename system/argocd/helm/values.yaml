@@ -202,7 +202,7 @@ configs:
     dex.config: |
       connectors:
         - config:
-            issuer: https://authentik.svc.cedille.club/application/o/argocd/
+            issuer: https://auth.etsmtl.club/application/o/argocd/
             clientID: JDqmDzVCT0Em8fxmDskdhM3yPTqG1Y4jd9xYEn7N
             clientSecret: $argocd-authentik-secret:dex.authentik.clientSecret
             insecureEnableGroups: true
