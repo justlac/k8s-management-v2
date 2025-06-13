@@ -168,7 +168,7 @@ configs:
   cm:
     # -- Create the argocd-cm configmap for [declarative setup]
     create: true
-    kustomize.buildOptions: --enable-helm
+    kustomize.buildOptions: --enable-helm --load-restrictor LoadRestrictionsNone
 
     # -- Annotations to be added to argocd-cm configmap
     annotations: {}
