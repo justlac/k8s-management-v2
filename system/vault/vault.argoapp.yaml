@@ -11,14 +11,14 @@ spec:
     server: https://kubernetes.default.svc
   project: k8s-management-v2
   sources:
-  - repoURL: 'https://github.com/ClubCedille/k8s-management-v2.git'
-    path: system/vault
-    targetRevision: HEAD
+    - repoURL: 'https://github.com/ClubCedille/k8s-management-v2.git'
+      path: system/vault
+      targetRevision: HEAD
   ignoreDifferences:
-  - group: admissionregistration.k8s.io
-    kind: MutatingWebhookConfiguration
-    jqPathExpressions:
-    - .webhooks[]?.clientConfig.caBundle
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      jqPathExpressions:
+        - .webhooks[]?.clientConfig.caBundle
   syncPolicy:
     automated:
       selfHeal: true
@@ -26,4 +26,4 @@ spec:
       labels:
         pod-security.kubernetes.io/enforce: privileged
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true

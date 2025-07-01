@@ -9,14 +9,14 @@ spec:
     tls:
       secretName: vault-tls
   routes:
-  - conditions:
-    - header:
-        contains: application/grpc
-        name: Content-Type
-    services:
-    - name: vault-ui
-      port: 8200
-      protocol: h2c
-  - services:
-    - name: vault-ui
-      port: 8200
+    - conditions:
+        - header:
+            contains: application/grpc
+            name: Content-Type
+      services:
+        - name: vault-ui
+          port: 8200
+          protocol: h2c
+    - services:
+        - name: vault-ui
+          port: 8200
