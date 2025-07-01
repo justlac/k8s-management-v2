@@ -8,9 +8,9 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: vault.mgmt.cedille.club
+  commonName: vault.mgmtv2.cedille.club
   dnsNames:
-    - vault.mgmt.cedille.club
+    - vault.mgmtv2.cedille.club
   # Optional: Set the duration and renewal time
   duration: 2160h
   renewBefore: 360h

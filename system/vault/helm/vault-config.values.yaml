@@ -2,4 +2,4 @@ enableMonitoring: false
 enableCertManager: true
 env:
   - name: VAULT_ADDR
-    value: https://vault.mgmt.cedille.club
+    value: https://vault.mgmtv2.cedille.club

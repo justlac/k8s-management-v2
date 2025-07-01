@@ -3,11 +3,9 @@ kind: HTTPProxy
 metadata:
   name: vault
   namespace: vault
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   virtualhost:
-    fqdn: vault.mgmt.cedille.club
+    fqdn: vault.mgmtv2.cedille.club
     tls:
       secretName: vault-tls
   routes:

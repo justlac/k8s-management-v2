@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: k8s-management-v2
   sources:
-  - repoURL: 'https://github.com/ClubCedille/k8s-management.git'
+  - repoURL: 'https://github.com/ClubCedille/k8s-management-v2.git'
     path: system/vault
     targetRevision: HEAD
   ignoreDifferences:

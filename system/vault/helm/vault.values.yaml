@@ -1,5 +1,6 @@
 server:
   dataStorage:
+    enabled: true
     size: 8Gi
     mountPath: "/vault/data"
     storageClass: cephfs
@@ -11,23 +12,25 @@ server:
     storageClass: cephfs
     accessMode: ReadWriteOnce
 
-  extraEnvironmentVars:
-    VAULT_SEAL_TYPE: gcpckms
-    GOOGLE_CREDENTIALS: /vault/userconfig/kms-creds/credentials.json
+  # extraEnvironmentVars:
+  #   VAULT_SEAL_TYPE: gcpckms
+  #   GOOGLE_CREDENTIALS: /vault/userconfig/kms-creds/credentials.json
+  #   GOOGLE_PROJECT: "Cedille"
+  #   GOOGLE_BUCKET: "vault-cedille"
 
-  extraSecretEnvironmentVars:
-  - envName: GOOGLE_REGION
-    secretName: kms-infos
-    secretKey: region
-  - envName: GOOGLE_PROJECT
-    secretName: kms-infos
-    secretKey: project
-  - envName: VAULT_GCPCKMS_SEAL_KEY_RING
-    secretName: kms-infos
-    secretKey: keyring
-  - envName: VAULT_GCPCKMS_SEAL_CRYPTO_KEY
-    secretName: kms-infos
-    secretKey: cryptokey
+  # extraSecretEnvironmentVars:
+  # - envName: GOOGLE_REGION
+  #   secretName: kms-infos
+  #   secretKey: region
+  # - envName: GOOGLE_PROJECT
+  #   secretName: kms-infos
+  #   secretKey: project
+  # - envName: VAULT_GCPCKMS_SEAL_KEY_RING
+  #   secretName: kms-infos
+  #   secretKey: keyring
+  # - envName: VAULT_GCPCKMS_SEAL_CRYPTO_KEY
+  #   secretName: kms-infos
+  #   secretKey: cryptokey
 
   extraVolumes:
     - type: secret
@@ -48,7 +51,10 @@ server:
       storage "file" {
         path = "/vault/data"
       }
-      # service_registration "kubernetes" {}
+      # storage "gcs" {
+      #   bucket = "vault-cedille"
+      #   prefix = "vault/"
+      # }
 
 ui:
   enabled: true
