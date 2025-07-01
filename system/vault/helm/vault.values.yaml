@@ -19,18 +19,18 @@ server:
     GOOGLE_BUCKET: "vault-cedille"
 
   extraSecretEnvironmentVars:
-  - envName: GOOGLE_REGION
-    secretName: kms-infos
-    secretKey: region
-  - envName: GOOGLE_PROJECT
-    secretName: kms-infos
-    secretKey: project
-  - envName: VAULT_GCPCKMS_SEAL_KEY_RING
-    secretName: kms-infos
-    secretKey: keyring
-  - envName: VAULT_GCPCKMS_SEAL_CRYPTO_KEY
-    secretName: kms-infos
-    secretKey: cryptokey
+    - envName: GOOGLE_REGION
+      secretName: kms-infos
+      secretKey: region
+    - envName: GOOGLE_PROJECT
+      secretName: kms-infos
+      secretKey: project
+    - envName: VAULT_GCPCKMS_SEAL_KEY_RING
+      secretName: kms-infos
+      secretKey: keyring
+    - envName: VAULT_GCPCKMS_SEAL_CRYPTO_KEY
+      secretName: kms-infos
+      secretKey: cryptokey
 
   extraVolumes:
     - type: secret
