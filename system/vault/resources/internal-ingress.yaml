@@ -1,9 +1,10 @@
 apiVersion: projectcontour.io/v1
-kind: HTTPProxy
+kind: IngressRoute
 metadata:
-  name: vault
+  name: vault-ingress
   namespace: vault
 spec:
+  ingressClass: contour-internal
   virtualhost:
     fqdn: vault.mgmtv2.cedille.club
     tls:
