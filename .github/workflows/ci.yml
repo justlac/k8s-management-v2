@@ -1,7 +1,0 @@
-name: ci
-on:
-  pull_request:
-
-jobs:
-  kubernetes-repo-standard:
-    uses: ClubCedille/cedille-workflows/.github/workflows/kubernetes-repo-standards.yml@master
