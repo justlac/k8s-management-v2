@@ -15,7 +15,6 @@ server:
   extraEnvironmentVars:
     VAULT_SEAL_TYPE: gcpckms
     GOOGLE_CREDENTIALS: /vault/userconfig/kms-creds/credentials.json
-    GOOGLE_PROJECT: "Cedille"
     GOOGLE_BUCKET: "vault-cedille"
 
   extraSecretEnvironmentVars:
