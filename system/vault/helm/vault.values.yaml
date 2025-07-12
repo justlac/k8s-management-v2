@@ -14,20 +14,21 @@ server:
   extraEnvironmentVars:
     VAULT_SEAL_TYPE: gcpckms
     GOOGLE_CREDENTIALS: /vault/userconfig/kms-creds/credentials.json
+    GOOGLE_APPLICATION_CREDENTIALS: /vault/userconfig/kms-creds/credentials.json
 
   extraSecretEnvironmentVars:
-  - envName: GOOGLE_REGION
-    secretName: kms-infos
-    secretKey: region
-  - envName: GOOGLE_PROJECT
-    secretName: kms-infos
-    secretKey: project
-  - envName: VAULT_GCPCKMS_SEAL_KEY_RING
-    secretName: kms-infos
-    secretKey: keyring
-  - envName: VAULT_GCPCKMS_SEAL_CRYPTO_KEY
-    secretName: kms-infos
-    secretKey: cryptokey
+    - envName: GOOGLE_REGION
+      secretName: kms-infos
+      secretKey: region
+    - envName: GOOGLE_PROJECT
+      secretName: kms-infos
+      secretKey: project
+    - envName: VAULT_GCPCKMS_SEAL_KEY_RING
+      secretName: kms-infos
+      secretKey: keyring
+    - envName: VAULT_GCPCKMS_SEAL_CRYPTO_KEY
+      secretName: kms-infos
+      secretKey: cryptokey
 
   extraVolumes:
     - type: secret
@@ -45,10 +46,16 @@ server:
         address = "[::]:8200"
         cluster_address = "[::]:8201"
       }
-      storage "file" {
-        path = "/vault/data"
+      seal "gcpckms" {
+        project     = "cedille-464122"
+        region      = "global"
+        key_ring    = "vault-cedille"
+        crypto_key  = "vault-cedille"
       }
-      # service_registration "kubernetes" {}
+      storage "gcs" {
+         bucket = "vault-cedille"
+         prefix = "vault/"
+      }
 
 ui:
   enabled: true
