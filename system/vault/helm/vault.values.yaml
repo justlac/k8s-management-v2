@@ -1,6 +1,5 @@
 server:
   dataStorage:
-    enabled: true
     size: 8Gi
     mountPath: "/vault/data"
     storageClass: cephfs
@@ -15,7 +14,7 @@ server:
   extraEnvironmentVars:
     VAULT_SEAL_TYPE: gcpckms
     GOOGLE_CREDENTIALS: /vault/userconfig/kms-creds/credentials.json
-    GOOGLE_BUCKET: "vault-cedille"
+    GOOGLE_APPLICATION_CREDENTIALS: /vault/userconfig/kms-creds/credentials.json
 
   extraSecretEnvironmentVars:
     - envName: GOOGLE_REGION
@@ -47,15 +46,21 @@ server:
         address = "[::]:8200"
         cluster_address = "[::]:8201"
       }
-       storage "gcs" {
+      seal "gcpckms" {
+        project     = "cedille-464122"
+        region      = "global"
+        key_ring    = "vault-cedille"
+        crypto_key  = "vault-cedille"
+      }
+      storage "gcs" {
          bucket = "vault-cedille"
          prefix = "vault/"
-       }
+      }
 
 ui:
   enabled: true
   publishNotReadyAddresses: true
-  activeVaultPodOnly: falses
+  activeVaultPodOnly: false
   serviceType: "ClusterIP"
   externalPort: 8200
   targetPort: 8200
