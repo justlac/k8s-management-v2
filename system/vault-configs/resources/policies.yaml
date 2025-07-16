@@ -3,7 +3,7 @@ kind: Policy
 metadata:
   name: common
 spec:
-  authentication: 
+  authentication:
     path: k8s-management-v2
     role: config-admin
   policy: |
@@ -22,7 +22,7 @@ kind: Policy
 metadata:
   name: config-admin
 spec:
-  authentication: 
+  authentication:
     path: k8s-management-v2
     role: config-admin
   policy: |
@@ -47,7 +47,7 @@ kind: Policy
 metadata:
   name: test
 spec:
-  authentication: 
+  authentication:
     path: k8s-management-v2
     role: config-admin
   policy: |
