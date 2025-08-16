@@ -30,10 +30,10 @@ server:
       secretName: kms-infos
       secretKey: cryptokey
 
-   volumes:
-     - name: vault-certs
-       secret:
-         secretName: vault-cert-secret
+  volumes:
+    - name: vault-certs
+      secret:
+        secretName: vault-cert-secret
 
   volumeMounts:
     - name: vault-certs
