@@ -4,10 +4,10 @@ metadata:
   name: config-admin
 spec:
   # Add fields here
-  authentication: 
-    path: k8s-management-v2
+  authentication:
+    path: kubernetes
     role: config-admin
-  path: k8s-management-v2
+  path: kubernetes
   policies:
     - config-admin
   targetServiceAccounts:
@@ -21,10 +21,10 @@ kind: KubernetesAuthEngineRole
 metadata:
   name: secret-writer
 spec:
-  authentication: 
-    path: k8s-management-v2
+  authentication:
+    path: kubernetes
     role: config-admin
-  path: k8s-management-v2  
+  path: kubernetes
   policies:
     - secret-writer
   targetServiceAccounts:
@@ -38,10 +38,10 @@ kind: KubernetesAuthEngineRole
 metadata:
   name: secret-reader
 spec:
-  authentication: 
-    path: k8s-management-v2
+  authentication:
+    path: kubernetes
     role: config-admin
-  path: k8s-management-v2  
+  path: kubernetes
   policies:
     - secret-reader
   targetServiceAccounts:
