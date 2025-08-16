@@ -5,11 +5,6 @@ server:
     storageClass: cephfs
     accessMode: ReadWriteOnce
 
-  volumeMounts:
-    - name: vault-certs
-      mountPath: /vault-certs
-      readOnly: true
-
   auditStorage:
     size: 4Gi
     mountPath: "/vault/audit"
@@ -34,6 +29,16 @@ server:
     - envName: VAULT_GCPCKMS_SEAL_CRYPTO_KEY
       secretName: kms-infos
       secretKey: cryptokey
+
+   volumes:
+     - name: vault-certs
+       secret:
+         secretName: vault-cert-secret
+
+  volumeMounts:
+    - name: vault-certs
+      mountPath: /vault-certs
+      readOnly: true
 
   extraVolumes:
     - type: secret
