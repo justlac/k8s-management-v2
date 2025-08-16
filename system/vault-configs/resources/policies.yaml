@@ -4,7 +4,7 @@ metadata:
   name: common
 spec:
   authentication:
-    path: k8s-management-v2
+    path: kubernetes
     role: config-admin
   policy: |
     # create secrets
@@ -23,7 +23,7 @@ metadata:
   name: config-admin
 spec:
   authentication:
-    path: k8s-management-v2
+    path: kubernetes
     role: config-admin
   policy: |
     path "sys/*" {
@@ -48,7 +48,7 @@ metadata:
   name: test
 spec:
   authentication:
-    path: k8s-management-v2
+    path: kubernetes
     role: config-admin
   policy: |
     # create secrets
