@@ -5,7 +5,7 @@ metadata:
   namespace: vault
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
-    ingress.kubernetes.io/force-ssl-redirect: "true"
+    ingress.kubernetes.io/force-ssl-redirect: "false"
     kubernetes.io/tls-acme: "true"
 spec:
   ingressClassName: contour-internal
