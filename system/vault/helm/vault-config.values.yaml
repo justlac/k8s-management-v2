@@ -25,7 +25,7 @@ env:
 volumes:
   - name: vault-certs
     secret:
-      secretName: vault-tls
+      secretName: vault-cert-secret
 volumeMounts:
   - mountPath: /vault-certs
     name: vault-certs
