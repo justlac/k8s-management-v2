@@ -5,6 +5,11 @@ server:
     storageClass: cephfs
     accessMode: ReadWriteOnce
 
+  volumeMounts:
+    - name: vault-certs
+      mountPath: /vault-certs
+      readOnly: true
+
   auditStorage:
     size: 4Gi
     mountPath: "/vault/audit"
@@ -33,6 +38,9 @@ server:
   extraVolumes:
     - type: secret
       name: kms-creds
+    - name: vault-certs
+      type: secret
+      secretName: vault-cert-secret
 
   standalone:
     enabled: true
@@ -42,7 +50,9 @@ server:
       log_requests_level = "debug"
       log_level = "debug"
       listener "tcp" {
-        tls_disable = 1
+        tls_disable = 0
+        tls_cert_file = "/vault-certs/vault.crt"
+        tls_key_file = "/vault-certs/vault.key"
         address = "[::]:8200"
         cluster_address = "[::]:8201"
       }
