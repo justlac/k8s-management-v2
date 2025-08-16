@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: contour-internal
   tls:
-    - secretName: vault-cert-secret
+    - secretName: vault-certs
       hosts:
         - vault.mgmtv2.cedille.club
   rules:

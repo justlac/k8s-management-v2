@@ -33,7 +33,7 @@ server:
   volumes:
     - name: vault-certs
       secret:
-        secretName: vault-cert-secret
+        secretName: vault-certs
 
   volumeMounts:
     - name: vault-certs
@@ -45,7 +45,7 @@ server:
       name: kms-creds
     - name: vault-certs
       type: secret
-      secretName: vault-cert-secret
+      secretName: vault-certs
 
   standalone:
     enabled: true
