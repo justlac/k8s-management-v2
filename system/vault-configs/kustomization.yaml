@@ -5,3 +5,4 @@ resources:
   - resources/roles.yaml
   - resources/policies.yaml
   - resources/secret-engine.yaml
+  - vault-test.yaml
