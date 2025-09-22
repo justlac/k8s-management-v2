@@ -11,7 +11,7 @@ spec:
   policies:
     - config-admin
   targetServiceAccounts:
-    - default
+    - vault
   targetNamespaces:
     targetNamespaces:
     - vault
