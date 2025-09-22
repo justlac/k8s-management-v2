@@ -31,12 +31,8 @@ metadata:
   name: vault-kv-app
   namespace: vault
 spec:
-  type: kv-v2
-
-  # mount path
+  type: kv
   mount: kv
-
-  # path of the secret
   path: webapp/config
 
   # dest k8s secret
