@@ -41,17 +41,3 @@ spec:
     path "kv-system/*" {
       capabilities =  ["create", "read", "update", "delete", "list", "sudo"]
     }
----
-apiVersion: redhatcop.redhat.io/v1alpha1
-kind: Policy
-metadata:
-  name: test
-spec:
-  authentication:
-    path: kubernetes
-    role: config-admin
-  policy: |
-    # create secrets
-    path "kv-shared/data/everyone/*" {
-      capabilities = [ "read" ]
-    }
