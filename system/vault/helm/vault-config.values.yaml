@@ -12,7 +12,7 @@ controller:
         keyName: vso-client-cache
         transitMount: transit
         kubernetes:
-          role: auth-role-operator
+          role: config-admin
           serviceAccount: vault-secrets-operator-controller-manager
           tokenAudiences: ["vault"]
 enableMonitoring: false
