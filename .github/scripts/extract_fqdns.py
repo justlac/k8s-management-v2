@@ -7,6 +7,7 @@ et générer un fichier gatus-config.yml compatible avec Gatus
 import os
 import yaml
 import glob
+import re
 from pathlib import Path
 from datetime import datetime
 
@@ -26,7 +27,7 @@ def find_fqdn_in_yaml(file_path):
             documents = yaml.safe_load_all(file)
             for doc in documents:
                 if doc:  # Ignorer les documents vides
-                    fqdns.extend(extract_fqdn_recursive(doc))
+                    fqdns.extend(extract_fqdn_recursive(doc, str(file_path)))
     except Exception as e:
         print(f"Erreur lors de la lecture de {file_path}: {e}")
 
@@ -47,6 +48,14 @@ def is_valid_fqdn(fqdn):
         ".local",
         "example.org",
         "test.com",
+        "httpbin.org",  # Found in ArgoCD config as example
+        "quay.io",  # Container registry, not a service to monitor
+        "github.com",  # Git repositories, not services to monitor
+        "kubernetes.io",  # Documentation URLs, not services to monitor
+        "argoproj.io",  # ArgoCD project URLs, not services to monitor
+        "hashicorp.com",  # Documentation URLs, not services to monitor
+        "redhat.io",  # API references, not services to monitor
+        "microsoftonline.com",  # OAuth endpoints, not direct services to monitor
     ]
 
     # Vérifier si le FQDN contient des patterns invalides
@@ -62,15 +71,17 @@ def is_valid_fqdn(fqdn):
     return True
 
 
-def extract_fqdn_recursive(obj):
+def extract_fqdn_recursive(obj, debug_path=""):
     """
     Recherche récursivement les clés contenant des FQDNs dans un objet YAML
-    Cherche: 'fqdn', 'host', 'hosts', 'dnsNames', 'commonName', 'domain'
+    Cherche: 'fqdn', 'host', 'hosts', 'dnsNames', 'commonName', 'domain', 'issuer'
     """
     fqdns = []
 
     if isinstance(obj, dict):
         for key, value in obj.items():
+            current_path = f"{debug_path}.{key}" if debug_path else key
+
             # Clés qui contiennent directement des FQDNs
             if key in ["fqdn", "host", "commonName", "domain"] and isinstance(
                 value, str
@@ -82,6 +93,25 @@ def extract_fqdn_recursive(obj):
                     and is_valid_fqdn(value)
                 ):
                     fqdns.append(value)
+                    print(f"  Found FQDN '{value}' at {current_path}")
+            # Clés qui peuvent contenir des URLs avec des FQDNs (comme issuer)
+            elif key in ["issuer", "url", "endpoint"] and isinstance(value, str):
+                print(f"  Checking URL field '{key}' with value: {value}")
+                # Extraire le FQDN des URLs
+                if value.startswith("http"):
+                    # Extraire le domaine de l'URL
+                    url_match = re.search(r"https?://([^/]+)", value)
+                    if url_match:
+                        domain = url_match.group(1)
+                        print(f"  Extracted domain '{domain}' from URL")
+                        if is_valid_fqdn(domain):
+                            fqdns.append(domain)
+                            print(f"  Added FQDN '{domain}' from URL at {current_path}")
+                        else:
+                            print(f"  Domain '{domain}' failed validation")
+                elif "." in value and is_valid_fqdn(value):
+                    fqdns.append(value)
+                    print(f"  Found direct FQDN '{value}' at {current_path}")
             # Clés qui contiennent des listes de FQDNs
             elif key in ["hosts", "dnsNames"] and isinstance(value, list):
                 for item in value:
@@ -92,12 +122,30 @@ def extract_fqdn_recursive(obj):
                         and is_valid_fqdn(item)
                     ):
                         fqdns.append(item)
+                        print(f"  Found FQDN '{item}' in list at {current_path}")
+            # Special handling for embedded YAML strings (like dex.config)
+            elif isinstance(value, str) and (
+                "\n" in value and (":" in value or "issuer:" in value)
+            ):
+                print(f"  Checking embedded YAML in field '{key}'")
+                try:
+                    # Try to parse as YAML
+                    embedded_yaml = yaml.safe_load(value)
+                    if embedded_yaml:
+                        fqdns.extend(
+                            extract_fqdn_recursive(
+                                embedded_yaml, f"{current_path}[embedded]"
+                            )
+                        )
+                except yaml.YAMLError:
+                    # Not valid YAML, continue
+                    pass
             else:
                 # Continuer la recherche récursive
-                fqdns.extend(extract_fqdn_recursive(value))
+                fqdns.extend(extract_fqdn_recursive(value, current_path))
     elif isinstance(obj, list):
-        for item in obj:
-            fqdns.extend(extract_fqdn_recursive(item))
+        for i, item in enumerate(obj):
+            fqdns.extend(extract_fqdn_recursive(item, f"{debug_path}[{i}]"))
 
     return fqdns
 
