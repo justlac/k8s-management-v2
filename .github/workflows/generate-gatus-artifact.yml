@@ -4,7 +4,7 @@ on:
     push:
         branches: ["main", "master"]
         paths:
-            - "apps/**" # Only run if app configs change
+            - "system/**"
 
 jobs:
     generate-config-artifact:
@@ -33,6 +33,7 @@ jobs:
                   echo "# Source: ${{ github.repository }}" >> ${{ github.event.repository.name }}.yml
                   echo "# Generated: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ${{ github.event.repository.name }}.yml
                   echo "# Commit: ${{ github.sha }}" >> ${{ github.event.repository.name }}.yml
+                  echo "# Run ID: ${{ github.run_id }}" >> ${{ github.event.repository.name }}.yml
 
             - name: Display generated config
               run: |
@@ -48,3 +49,18 @@ jobs:
                   name: gatus-config-${{ github.event.repository.name }}
                   path: ${{ github.event.repository.name }}.yml
                   retention-days: 30
+
+            - name: Trigger master pipeline
+              if: success()
+              uses: peter-evans/repository-dispatch@v3
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  repository: justlac/gatus-master-deploy
+                  event-type: gatus-config-updated
+                  client-payload: |
+                      {
+                        "source_repo": "${{ github.repository }}",
+                        "artifact_name": "gatus-config-${{ github.event.repository.name }}",
+                        "commit": "${{ github.sha }}",
+                        "run_id": "${{ github.run_id }}"
+                      }
