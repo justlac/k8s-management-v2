@@ -5,6 +5,7 @@ on:
         branches: ["main", "master"]
         paths:
             - "system/**"
+    workflow_dispatch: # Allow manual trigger
 
 jobs:
     generate-config-artifact:
